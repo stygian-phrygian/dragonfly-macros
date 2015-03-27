@@ -58,7 +58,7 @@ mapping_rule = MappingRule(
     exported=False,
     mapping={          
 
-        "say <text>": Text("text"),
+        "say <text>": Text("%(text)s"),
         
         "alpha": Key("a", static=True),
         "bravo": Key("b", static=True),
@@ -125,6 +125,9 @@ mapping_rule = MappingRule(
         "eight": Key("8"),
         "nine": Key("9"),
 
+        # BUG?
+        # saying "space cap something" produces 
+        #"space Something" rather than " Something"
         "space": Key("space", static=True),
         "tab": Key("tab"),
         "(newline|enter|slap)": Key("enter"),
@@ -138,8 +141,8 @@ mapping_rule = MappingRule(
         "double (quote|quotes)": Key("dquote"),
         "(hash|hashtag)": Key("hash"),
         "dollar [sign]": Key("dollar"),
-        "comma": Key("comma"),
-        "(dot|period)": Key("dot"),
+        "comma": Key("comma"), # BUG: "alpha comma alpha" -> "alpha, alpha"
+        "[<text_left>] (dot|period|point) [<text_right>]": Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
         "slash": Key("slash"),
         "colon": Key("colon"),
         # this doesn't work for some reason 
@@ -151,7 +154,7 @@ mapping_rule = MappingRule(
         "at [sign]": Key("at"),
         "backslash": Key("backslash"),
         "backtick": Key("backtick"),
-        "(pipe|bar)": Key("bar"),
+        "pipe": Key("bar"),
         "caret": Key("caret"),
         "question [mark]": Key("question"),
         "tilde": Key("tilde"),
@@ -169,6 +172,8 @@ mapping_rule = MappingRule(
         # - function definition
         #"deaf": Text("def ():") + Key("left:2"),               # python
         "function": Text("function () {}") + Key("left:4"),     # javascript
+        # loop definition
+        "for loop": Text("for(;;) {}") + Key("left:6"),
         # -- code block deliniation 
         "cuddle": Text("()") + Key("left"),
         "twinkle": Text("''") + Key("left"), 
@@ -177,20 +182,29 @@ mapping_rule = MappingRule(
         # -- helpful shortcuts''
         "punk": Text(";") + Key("enter"),
         # -- common phrases
+        "var": Text("var "),
         "aargh": Text("arg"),
         "aarghz": Text("args"),
-        "aargh (v|b)": Text("arg v"),
+        #doesn't work, dragon can't hear the 'v' or 'b'
+        #"aargh (v|b)": Text("arg v"),
+        "consul": Text("console"),
 
         # vim specific
+        # TODO
 
 
 
         },
     extras=[           # Special elements in the specs of the mapping.
             Dictation("text"),
-           ]
+            Dictation("text_left"),
+            Dictation("text_right")
+           ],
+    defaults={
+            "text_left": "",
+            "text_right": ""
+             }
     )
-
 # Add the action rule to the grammar instance.
 
 gvim_rule = SeriesMappingRule(mapping_rule)
