@@ -58,6 +58,9 @@ mapping_rule = MappingRule(
     exported=False,
     mapping={          
 
+        #BUG
+        # saying "say enter" -> ""
+        # why?
         "say <text>": Text("%(text)s"),
         
         "alpha": Key("a", static=True),
@@ -129,65 +132,71 @@ mapping_rule = MappingRule(
         # saying "space cap something" produces 
         #"space Something" rather than " Something"
         "space": Key("space", static=True),
-        "tab": Key("tab"),
-        "(newline|enter|slap)": Key("enter"),
-        "percent [sign]": Key("percent"),
-        "(asterisk|star|splat)": Key("asterisk"),
-        "plus [sign]": Key("plus"),
-        "(hyphen|tack)": Key("hyphen"),
-        "(equal|equals)": Key("equal"),
-        "bang": Key("exclamation"),
-        "[single] quote": Key("squote"),
-        "double (quote|quotes)": Key("dquote"),
-        "(hash|hashtag)": Key("hash"),
-        "dollar [sign]": Key("dollar"),
-        "comma": Key("comma"), # BUG: "alpha comma alpha" -> "alpha, alpha"
-        "[<text_left>] (dot|period|point) [<text_right>]": Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
-        "slash": Key("slash"),
-        "colon": Key("colon"),
+        "tab": Key("tab", static=True),
+        "(newline|enter|slap)": Key("enter", static=True),
+        "percent [sign]": Key("percent", static=True),
+        "(asterisk|star|splat)": Key("asterisk", static=True),
+        "plus [sign]": Key("plus", static=True),
+        "(hyphen|minus|tack)": Key("hyphen", static=True),
+        "(equal|equals)": Key("equal", static=True),
+        "bang": Key("exclamation", static=True),
+        "[single] quote": Key("squote", static=True),
+        "double (quote|quotes)": Key("dquote", static=True),
+        "(hash|hashtag)": Key("hash", static=True),
+        "dollar [sign]": Key("dollar", static=True),
+        "comma": Key("comma", static=True), # BUG: "alpha comma alpha" -> "alpha, alpha"
+        "[<text_left>] (dot|point) [<text_right>]": Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
+        "slash": Key("slash", static=True),
+        "colon": Key("colon", static=True),
         # this doesn't work for some reason 
         #"semicolon": Key("semicolon"),
-        "semicolon": Text(";"),
-        "(escape|scape)": Key("escape"),
-        "ampersand": Key("ampersand"),
-        "apostrophe": Key("apostrophe"),
-        "at [sign]": Key("at"),
-        "backslash": Key("backslash"),
-        "backtick": Key("backtick"),
-        "pipe": Key("bar"),
-        "caret": Key("caret"),
-        "question [mark]": Key("question"),
-        "tilde": Key("tilde"),
-        "(underscore|score)": Key("underscore"),
+        "semicolon": Text(";", static=True),
+        "(escape|scape)": Key("escape", static=True),
+        "ampersand": Key("ampersand", static=True),
+        "apostrophe": Key("apostrophe", static=True),
+        "at [sign]": Key("at", static=True),
+        "backslash": Key("backslash", static=True),
+        "backtick": Key("backtick", static=True),
+        "pipe": Key("bar", static=True),
+        "caret": Key("caret", static=True),
+        "question [mark]": Key("question", static=True),
+        "tilde": Key("tilde", static=True),
+        "(underscore|score)": Key("underscore", static=True),
 
         #open paren
         #close paren
 
         # programming aids
+
         # -- variable/function naming 
-        "snake <text>": Function(snake_case_action, extra={"text"}),
-        "camel <text>": Function(camel_case_action, extra={"text"}),
-        "studley <text>": Function(studley_case_action, extra={"text"}),
-        "one word <text>": Function(one_word_case_action, extra={"text"}),
+        "snake <text>"      : Function(snake_case_action,    extra={"text"}),
+        "camel <text>"      : Function(camel_case_action,    extra={"text"}),
+        "studley <text>"    : Function(studley_case_action,  extra={"text"}),
+        "one word <text>"   : Function(one_word_case_action, extra={"text"}),
+
+        # -- code block deliniation 
+        "cuddle [<inner_text>]"             : Text("(%(inner_text)s)") + Key("left"),
+        "twinkle [<inner_text>]"            : Text("'%(inner_text)s'") + Key("left"), 
+        "tag [<inner_text>]"                : Text("<%(inner_text)s>") + Key("left"),
+        "(parcel|carton) [<inner_text>]"    : Text("[%(inner_text)s]") + Key("left"),
+        "(bunny|bunnies) [<inner_text>]"    : Text('"%(inner_text)s"') + Key("left"), 
+        "curly [block] [<inner_text>]"      : Text("{%(inner_text)s}") + Key("left"),
+
         # - function definition
         #"deaf": Text("def ():") + Key("left:2"),               # python
         "function": Text("function () {}") + Key("left:4"),     # javascript
         # loop definition
         "for loop": Text("for(;;) {}") + Key("left:6"),
-        # -- code block deliniation 
-        "cuddle": Text("()") + Key("left"),
-        "twinkle": Text("''") + Key("left"), 
-        "(bunny|bunnies)": Text('""') + Key("left"), 
-        "curly [block]": Text("{}") + Key("left"),
+
         # -- helpful shortcuts''
         "punk": Text(";") + Key("enter"),
         # -- common phrases
-        "var": Text("var "),
-        "aargh": Text("arg"),
-        "aarghz": Text("args"),
+        "variable": Text("var ", static=True),
+        "aargh": Text("arg", static=True),
+        "aarghz": Text("args", static=True),
         #doesn't work, dragon can't hear the 'v' or 'b'
         #"aargh (v|b)": Text("arg v"),
-        "consul": Text("console"),
+        "consul": Text("console", static=True),
 
         # vim specific
         # TODO
@@ -197,12 +206,15 @@ mapping_rule = MappingRule(
         },
     extras=[           # Special elements in the specs of the mapping.
             Dictation("text"),
+            Dictation("inner_text"),
             Dictation("text_left"),
             Dictation("text_right")
            ],
     defaults={
-            "text_left": "",
-            "text_right": ""
+            "text"          : "",
+            "inner_text"    : "",
+            "text_left"     : "",
+            "text_right"    : ""
              }
     )
 # Add the action rule to the grammar instance.
