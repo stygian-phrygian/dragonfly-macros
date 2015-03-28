@@ -14,6 +14,10 @@ def snake_case_action(text=""):
     s = "_".join(str(text).lower().split(" "))
     Text(s).execute()
 
+def spinal_case_action(text=""): # could also use kebab case?
+    s = "-".join(str(text).lower().split(" "))
+    Text(s).execute()
+
 def one_word_case_action(text=""):
     s = "".join(str(text).lower().split(" "))
     Text(s).execute()
@@ -128,7 +132,9 @@ mapping_rule = MappingRule(
         # BUG?
         # saying "space something" produces 
         #"space something" rather than " something"
-        "space": Key("space", static=False),
+        # possibly a conflict with dragon's inbuilt commands?
+        # possibilities : spy, spine, gap, bare, vacant, uni (the latter is easy to say quickly)
+        "(space|spy|spine)": Key("space", static=True),
         "tab": Key("tab", static=True),
         "(newline|enter|slap)": Key("enter", static=True),
         "percent [sign]": Key("percent", static=True),
@@ -170,6 +176,7 @@ mapping_rule = MappingRule(
         "camel <text>"      : Function(camel_case_action,    extra={"text"}),
         "studley <text>"    : Function(studley_case_action,  extra={"text"}),
         "one word <text>"   : Function(one_word_case_action, extra={"text"}),
+        #"spinal <text>"     : Function(spinal_case_action,   extra={"text"}), # might conflict with 'spine' above
 
         # -- code block deliniation 
         "cuddle [<inner_text>]"             : Text("(%(inner_text)s)") + Key("left"),
