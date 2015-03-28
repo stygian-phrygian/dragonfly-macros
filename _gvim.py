@@ -58,10 +58,7 @@ mapping_rule = MappingRule(
     exported=False,
     mapping={          
 
-        #BUG
-        # saying "say enter" -> ""
-        # why?
-        "say <text>": Text("%(text)s"),
+        "dictate <text>": Text("%(text)s"),
         
         "alpha": Key("a", static=True),
         "bravo": Key("b", static=True),
@@ -117,21 +114,21 @@ mapping_rule = MappingRule(
         "upper yankee": Key("Y", static=True),
         "upper zulu": Key("Z", static=True),
 
-        "zero": Key("0"),
-        "one": Key("1"),
-        "two": Key("2"),
-        "three": Key("3"),
-        "four": Key("4"),
-        "five": Key("5"),
-        "six": Key("6"),
-        "seven": Key("7"),
-        "eight": Key("8"),
-        "nine": Key("9"),
+        "zero": Key("0", static=True),
+        "one": Key("1", static=True),
+        "two": Key("2", static=True),
+        "three": Key("3", static=True),
+        "four": Key("4", static=True),
+        "five": Key("5", static=True),
+        "six": Key("6", static=True),
+        "seven": Key("7", static=True),
+        "eight": Key("8", static=True),
+        "nine": Key("9", static=True),
 
         # BUG?
-        # saying "space cap something" produces 
-        #"space Something" rather than " Something"
-        "space": Key("space", static=True),
+        # saying "space something" produces 
+        #"space something" rather than " something"
+        "space": Key("space", static=False),
         "tab": Key("tab", static=True),
         "(newline|enter|slap)": Key("enter", static=True),
         "percent [sign]": Key("percent", static=True),
@@ -140,7 +137,7 @@ mapping_rule = MappingRule(
         "(hyphen|minus|tack)": Key("hyphen", static=True),
         "(equal|equals)": Key("equal", static=True),
         "bang": Key("exclamation", static=True),
-        "[single] quote": Key("squote", static=True),
+        "[single] (quote|quotes)": Key("squote", static=True),
         "double (quote|quotes)": Key("dquote", static=True),
         "(hash|hashtag)": Key("hash", static=True),
         "dollar [sign]": Key("dollar", static=True),
