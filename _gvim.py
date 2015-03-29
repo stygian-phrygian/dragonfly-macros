@@ -223,8 +223,9 @@ mapping_rule = MappingRule(
         "consul": Text("console"),
         "you (till|tell)": Text("util"),
         "HTTP": Text("http"),
-
+        "(ex|ext) name": Text("extname"),
         # vim specific
+
         # TODO
 
 
