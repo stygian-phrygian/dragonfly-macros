@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from dragonfly import (Grammar, AppContext, MappingRule, CompoundRule, Dictation, Function,
-                       Key, Text, RuleRef, Repetition)
+                       Mimic, Key, Text, RuleRef, Repetition)
 
 gvim_context = AppContext(executable="gvim")
 grammar = Grammar("gvim", context=gvim_context)
@@ -137,11 +137,11 @@ mapping_rule = MappingRule(
         "(space|spy|spine)": Key("space", static=True),
         "tab": Key("tab", static=True),
         "(newline|enter|slap)": Key("enter", static=True),
-        "percent [sign]": Key("percent", static=True),
-        "(asterisk|star|splat)": Key("asterisk", static=True),
+        "(mod|percent) [sign]": Key("percent", static=True),
+        "(asterisk|star)": Key("asterisk", static=True),
         "plus [sign]": Key("plus", static=True),
         "(hyphen|minus|tack)": Key("hyphen", static=True),
-        "(equal|equals)": Key("equal", static=True),
+        "(equal|equals) [to]": Key("equal"), # BUG "static equals static" -> "static equals static"
         "bang": Key("exclamation", static=True),
         "[single] (quote|quotes)": Key("squote", static=True),
         "double (quote|quotes)": Key("dquote", static=True),
@@ -186,20 +186,33 @@ mapping_rule = MappingRule(
         "(bunny|bunnies) [<inner_text>]"    : Text('"%(inner_text)s"') + Key("left"), 
         "curly [block] [<inner_text>]"      : Text("{%(inner_text)s}") + Key("left"),
 
-        # - function definition
+        # -- comparison
+        # TODO implement "<=" & ">="
+        "double (equal|equals)"           : Text("=="),
+        "(strict|double) not equals"      : Text("!=="),
+        "(triple|strict) (equal|equals)"  : Text("==="),
+
+        # -- function definition
         #"deaf": Text("def ():") + Key("left:2"),               # python
-        "function": Text("function () {}") + Key("left:4"),     # javascript
-        # loop definition
-        "for loop": Text("for(;;) {}") + Key("left:6"),
+        "function": Text("function () {}") + Key("left:5"),     # javascript
+
+        # -- loop definition
+        "for loop": Text("for() {}") + Key("left:4"),
+        "while loop": Text("while() {}") + Key("left:4"),
 
         # -- helpful shortcuts''
         "punk": Text(";") + Key("enter"),
-        # -- common phrases
-        "variable": Text("var ", static=True),
+
+        # -- common phrases 
+
+        # -------- javascript specific
+        "variable [<text>]": Text("var %(text)s"),
         "aargh": Text("arg", static=True),
         "aarghz": Text("args", static=True),
-        #doesn't work, dragon can't hear the 'v' or 'b'
-        #"aargh (v|b)": Text("arg v"),
+        "FS": Text("fs", static=True),
+        "sink": Text("Sync", static=True),
+        "2 string": Text("toString", static=True),
+        "(error|air)": Text("err", static=True),
         "consul": Text("console", static=True),
 
         # vim specific
