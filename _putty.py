@@ -1,13 +1,4 @@
-
-"""
-    This module is a simple example of Dragonfly use.
-
-    It shows how to use Dragonfly's Grammar, AppContext, and MappingRule
-    classes.  This module can be activated in the same way as other
-    Natlink macros by placing it in the "My Documents\Natlink folder" or
-    "Program Files\NetLink/MacroSystem".
-
-"""
+# -*- coding: utf-8 -*-
 
 from dragonfly import (Grammar, AppContext, MappingRule, Dictation,
                        Key, Text)
@@ -16,28 +7,19 @@ from dragonfly import (Grammar, AppContext, MappingRule, Dictation,
 #---------------------------------------------------------------------------
 # Create this module's grammar and the context under which it'll be active.
 
-putty_context = AppContext(executable="putty")
-cmd_context   = AppContext(executable="cmd")
-powershell_context   = AppContext(executable="powershell")
+putty_context       = AppContext(executable="putty")
+cmd_context         = AppContext(executable="cmd")
+powershell_context  = AppContext(executable="powershell")
 grammar = Grammar("putty", context=(putty_context|cmd_context|powershell_context))
 
-
-#---------------------------------------------------------------------------
-# Create a mapping rule which maps things you can say to actions.
-#
-# Note the relationship between the *mapping* and *extras* keyword
-#  arguments.  The extras is a list of Dragonfly elements which are
-#  available to be used in the specs of the mapping.  In this example
-#  the Dictation("text")* extra makes it possible to use "<text>"
-#  within a mapping spec and "%(text)s" within the associated action.
 
 putty_rule = MappingRule(
     name="putty",      # The name of the rule.
     mapping={          # The mapping dict: spec -> action.
-             # shell
+             # characters
              "(slap|newline|enter)": Key("enter"),
              "(splat|star|asterisk)": Key("asterisk"),
-             "(hash|hashtag)": Key("hash"), 
+             "(hash|hashtag)": Key("hash"),
              "(minus|dash|tack|hyphen)": Key("hyphen"),
              "(dashdash|tacktack)": Key("hyphen,hyphen"),
              "interupt": Key("c-c"), # ctrl-c sends SIGINT
@@ -84,5 +66,3 @@ def unload():
     global grammar
     if grammar: grammar.unload()
     grammar = None
-
-

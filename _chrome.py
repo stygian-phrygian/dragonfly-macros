@@ -1,8 +1,4 @@
-
-"""
-put me in Natlink\MacroSystem folder 
-
-"""
+# -*- coding: utf-8 -*-
 
 from dragonfly import (Grammar, AppContext, MappingRule, Dictation, Integer,
                        Key, Text)
@@ -12,7 +8,7 @@ from dragonfly import (Grammar, AppContext, MappingRule, Dictation, Integer,
 # Create this module's grammar and the context under which it'll be active.
 
 chrome_context = AppContext(executable="chrome")
-grammar = Grammar("chrome", context=chrome_context)
+grammar        = Grammar("chrome", context=chrome_context)
 
 
 #---------------------------------------------------------------------------
@@ -27,6 +23,7 @@ grammar = Grammar("chrome", context=chrome_context)
 chrome_rule = MappingRule(
     name="chrome",     # The name of the rule.
     mapping={          # The mapping dict: spec -> action.
+            "dictate <text>": Key("%(text)s"),
             "[open] new (window|page)"              :Key("c-n"),
             "[open] new incognito (window|page)"    :Key("cs-n"),
             "[open] new tab"                        :Key("c-t"),
@@ -69,5 +66,3 @@ def unload():
     global grammar
     if grammar: grammar.unload()
     grammar = None
-
-

@@ -4,7 +4,7 @@ from dragonfly import (Grammar, AppContext, MappingRule, CompoundRule, Dictation
                        Mimic, Key, Text, RuleRef, Repetition)
 
 gvim_context = AppContext(executable="gvim")
-grammar = Grammar("gvim", context=gvim_context)
+grammar      = Grammar("gvim", context=gvim_context)
 
 
 
@@ -34,7 +34,7 @@ def studley_case_action(text=""):
 
 
 # SeriesMappingRule adapted from here:
-# https://github.com/barrysims/dragonfly/blob/master/utils/series_mapping_rule.py 
+# https://github.com/barrysims/dragonfly/blob/master/utils/series_mapping_rule.py
 # This class allows us to do CCR (continuous command recognition).
 # CCR lets us combine commands seamlessly together in one utterance.
 
@@ -54,16 +54,16 @@ class SeriesMappingRule(CompoundRule):
         for action in series:
             action.execute()
 
-# gvim rules adapted from here:
+# Gvim rules adapted from here:
 # https://github.com/davitenio/dragonfly-macros/blob/master/gvim.py
 
 mapping_rule = MappingRule(
-    name="gvim",      
+    name="gvim",
     exported=False,
-    mapping={          
+    mapping={
 
         "dictate <text>" : Text("%(text)s"),
-        
+
         "alpha"          : Key("a"),
         "bravo"          : Key("b"),
         "charlie"        : Key("c"),
@@ -129,107 +129,104 @@ mapping_rule = MappingRule(
         "eight" : Key("8"),
         "nine"  : Key("9"),
 
-        # Dragon already includes the macros 
+        # Dragon already includes the macros
         # "go (up|down|left|right) <n>"
         # hence we don't need to implement them
 
+        # Bugs?
+        # The space, equals, and comma characters do not work so well
+        # with CCR.  The same behavior persisted with the dot character,
+        # until I proffered the hack below.  There must be a better way?
 
-        # BUG?
-        # saying "space something" produces 
-        #"space something" rather than " something"
-        # possibly a conflict with dragon's inbuilt commands?
-        # possibilities : spy, spine, gap, bare, vacant, uni (the latter is easy to say quickly)
-        "(space|spy|spine)": Key("space"),
-        "tab": Key("tab"),
-        "(newline|enter|slap)": Key("enter"),
-        "(mod|percent) [sign]": Key("percent"),
-        "(asterisk|star)": Key("asterisk"),
-        "plus [sign]": Key("plus"),
-        "(hyphen|minus|tack)": Key("hyphen"),
-        "(equal|equals) [to]": Key("equal"), # BUG "static equals static" -> "static equals static"
-        "bang": Key("exclamation"),
-        "[single] (quote|quotes)": Key("squote"),
-        "double (quote|quotes)": Key("dquote"),
-        "(hash|hashtag)": Key("hash"),
-        "dollar [sign]": Key("dollar"),
-        "comma": Key("comma"), # BUG: "alpha comma alpha" -> "alpha, alpha"
-        "[<text_left>] (dot|point) [<text_right>]": Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
-        "slash": Key("slash"),
-        "colon": Key("colon"),
-        # this doesn't work for some reason 
+
+        "(space|spy|spine)"       : Key("space"),
+        "tab"                     : Key("tab"),
+        "(newline|enter|slap)"    : Key("enter"),
+        "(mod|percent) [sign]"    : Key("percent"),
+        "(asterisk|star)"         : Key("asterisk"),
+        "plus [sign]"             : Key("plus"),
+        "(hyphen|minus|tack)"     : Key("hyphen"),
+        "(equal|equals) [to]"     : Key("equal"),
+        "bang"                    : Key("exclamation"),
+        "[single] (quote|quotes)" : Key("squote"),
+        "double (quote|quotes)"   : Key("dquote"),
+        "(hash|hashtag)"          : Key("hash"),
+        "dollar [sign]"           : Key("dollar"),
+        "comma"                   : Key("comma"),
+        "[<text_left>] (dot|point) [<text_right>]" : Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
+        "slash"                   : Key("slash"),
+        "colon"                   : Key("colon"),
+        # This doesn't work for some reason.
         #"semicolon": Key("semicolon"),
-        "semicolon": Text(";"),
-        "(escape|scape)": Key("escape"),
-        "ampersand": Key("ampersand"),
-        "apostrophe": Key("apostrophe"),
-        "at [sign]": Key("at"),
-        "backslash": Key("backslash"),
-        "backtick": Key("backtick"),
-        "pipe": Key("bar"),
-        "caret": Key("caret"),
-        "question [mark]": Key("question"),
-        "tilde": Key("tilde"),
-        "(underscore|score)": Key("underscore"),
+        "semicolon"               : Text(";"),
+        "(escape|scape)"          : Key("escape"),
+        "ampersand"               : Key("ampersand"),
+        "apostrophe"              : Key("apostrophe"),
+        "at [sign]"               : Key("at"),
+        "backslash"               : Key("backslash"),
+        "backtick"                : Key("backtick"),
+        "pipe"                    : Key("bar"),
+        "caret"                   : Key("caret"),
+        "question [mark]"         : Key("question"),
+        "tilde"                   : Key("tilde"),
+        "(underscore|score)"      : Key("underscore"),
 
-        #open paren
-        #close paren
+        # Macros for the open and close code delimiters Need to be implemented.
+        # I haven't decided on proper macro names yet.
+
 
         # programming aids
 
-        # -- variable/function naming 
+        # -- variable/function naming
         "snake <text>"    : Function(snake_case_action,    extra={"text"}),
         "camel <text>"    : Function(camel_case_action,    extra={"text"}),
         "studley <text>"  : Function(studley_case_action,  extra={"text"}),
         "one word <text>" : Function(one_word_case_action, extra={"text"}),
-        #"spinal <text>"  : Function(spinal_case_action,   extra={"text"}), # might conflict with 'spine' above
+        # Might conflict with 'spine' macro above (for the space character).
+        #"spinal <text>"  : Function(spinal_case_action,   extra={"text"}),
 
-        # -- code block deliniation 
+        # -- code block deliniation
         "cuddle [<inner_text>]"          : Text("(%(inner_text)s)") + Key("left"),
-        "twinkle [<inner_text>]"         : Text("'%(inner_text)s'") + Key("left"), 
+        "twinkle [<inner_text>]"         : Text("'%(inner_text)s'") + Key("left"),
         "tag [<inner_text>]"             : Text("<%(inner_text)s>") + Key("left"),
         "(parcel|carton) [<inner_text>]" : Text("[%(inner_text)s]") + Key("left"),
-        "(bunny|bunnies) [<inner_text>]" : Text('"%(inner_text)s"') + Key("left"), 
+        "(bunny|bunnies) [<inner_text>]" : Text('"%(inner_text)s"') + Key("left"),
         "curly [block] [<inner_text>]"   : Text("{%(inner_text)s}") + Key("left"),
 
         # -- comparison
-        # TODO implement "<=" & ">="
+        # Implementing "<=" & ">=" has caused somewhat unpredictable
+        # conflicts with the other macros.
         "double (equal|equals)"          : Text("=="),
         "(strict|double) not equals"     : Text("!=="),
         "(triple|strict) (equal|equals)" : Text("==="),
 
         # -- function definition
         #"deaf": Text("def ():") + Key("left:2"),               # python
-        "function": Text("function () {}") + Key("left:5"),     # javascript
+        "function" : Text("function () {}") + Key("left:5"),     # javascript
 
         # -- loop definition
-        "for loop"  : Text("for() {};")   + Key("left:5"),
-        "for each"  : Text("forEach();")  + Key("left:2"),
-        "while loop": Text("while() {};") + Key("left:5"),
+        "for loop"   : Text("for() {};")   + Key("left:5"),
+        "for each"   : Text("forEach();")  + Key("left:2"),
+        "while loop" : Text("while() {};") + Key("left:5"),
 
         # -- helpful shortcuts''
-        "punk": Text(";") + Key("enter"),
+        "punk" : Text(";") + Key("enter"),
 
-        # -- common phrases 
+        # -- common phrases
 
         # -------- javascript specific
-        "variable [<text>]": Text("var %(text)s"),
-        "require [<text>]": Text("require()") + Key("left") + Text("%(text)s"),
-        "aargh": Text("arg"),
-        "aarghz": Text("args"),
-        "FS": Text("fs"),
-        "sink": Text("Sync"),
-        "2 string": Text("toString"),
-        "(error|air)": Text("err"),
-        "consul": Text("console"),
-        "you (till|tell)": Text("util"),
-        "HTTP": Text("http"),
-        "(ex|ext) name": Text("extname"),
-        # vim specific
-
-        # TODO
-
-
-
+        "variable [<text>]" : Text("var %(text)s"),
+        "require [<text>]"  : Text("require()") + Key("left") + Text("%(text)s"),
+        "aargh"             : Text("arg"),
+        "aarghz"            : Text("args"),
+        "FS"                : Text("fs"),
+        "sink"              : Text("Sync"),
+        "2 string"          : Text("toString"),
+        "(error|air)"       : Text("err"),
+        "consul"            : Text("console"),
+        "you (till|tell)"   : Text("util"),
+        "HTTP"              : Text("http"),
+        "(ex|ext) name"     : Text("extname")
         },
     extras=[           # Special elements in the specs of the mapping.
             Dictation("text"),
@@ -244,6 +241,8 @@ mapping_rule = MappingRule(
             "text_right"    : ""
              }
     )
+
+
 # Add the action rule to the grammar instance.
 
 gvim_rule = SeriesMappingRule(mapping_rule)
@@ -256,5 +255,3 @@ def unload():
     global grammar
     if grammar: grammar.unload()
     grammar = None
-
-
