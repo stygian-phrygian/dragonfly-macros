@@ -13,3 +13,9 @@ simply place all the python files in the MacroSystem directory
 - https://github.com/simianhacker/code-by-voice
 - https://github.com/synkarius/caster
 - https://github.com/barrysims/dragonfly
+- https://github.com/dictation-toolbox/dragonfly-scripts/tree/master/dynamics
+- https://github.com/brando4526/programming-language-dragonfly-macros
+- http://handsfreecoding.org/
+###Video Demos
+- https://www.youtube.com/watch?v=8SkdfdXWYaI
+- https://vimeo.com/9156942
