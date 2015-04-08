@@ -4,7 +4,8 @@ from dragonfly import (Grammar, AppContext, MappingRule, CompoundRule, Dictation
                        Mimic, Key, Text, RuleRef, Repetition)
 
 gvim_context = AppContext(executable="gvim")
-grammar      = Grammar("gvim", context=gvim_context)
+atom_context = AppContext(executable="atom")
+grammar      = Grammar("gvim", context=(gvim_context|atom_context))
 
 
 
@@ -148,8 +149,6 @@ mapping_rule = MappingRule(
         "(hyphen|minus|tack)"     : Key("hyphen"),
         "(equal|equals) [to]"     : Key("equal"),
         "bang"                    : Key("exclamation"),
-        "[single] (quote|quotes)" : Key("squote"),
-        "double (quote|quotes)"   : Key("dquote"),
         "(hash|hashtag)"          : Key("hash"),
         "dollar [sign]"           : Key("dollar"),
         "comma"                   : Key("comma"),
@@ -171,8 +170,21 @@ mapping_rule = MappingRule(
         "tilde"                   : Key("tilde"),
         "(underscore|score)"      : Key("underscore"),
 
-        # Macros for the open and close code delimiters Need to be implemented.
-        # I haven't decided on proper macro names yet.
+        # open and close code delimiters
+        "L paren"                     : Key("lparen"),   # (
+        "(or|our|are|R) paren"        : Key("rparen"),   # )
+        "L brace"                     : Key("lbrace"),   # {
+        "(or|our|are|R) brace"        : Key("rbrace"),   # }
+        "L bracket"                   : Key("lbracket"), # [
+        "(or|our|are|R) bracket"      : Key("rbracket"), # ]
+        "L angle"                     : Key("langle"),   # <
+        "(or|our|are|R) angle"        : Key("rangle"),   # >
+        "[(single|s)] (quote|quotes)" : Key("squote"),   # '
+        "(double|d) (quote|quotes)"   : Key("dquote"),   # "
+
+        # atom github ide specific
+
+        
 
 
         # programming aids
