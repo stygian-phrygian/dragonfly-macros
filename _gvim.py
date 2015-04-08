@@ -179,12 +179,12 @@ mapping_rule = MappingRule(
         "(or|our|are|R) bracket"      : Key("rbracket"), # ]
         "L angle"                     : Key("langle"),   # <
         "(or|our|are|R) angle"        : Key("rangle"),   # >
-        "[(single|s)] (quote|quotes)" : Key("squote"),   # '
-        "(double|d) (quote|quotes)"   : Key("dquote"),   # "
+        "[(single|S)] (quote|quotes)" : Key("squote"),   # '
+        "(double|D) (quote|quotes)"   : Key("dquote"),   # "
 
         # atom github ide specific
 
-        
+
 
 
         # programming aids
