@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-
-from dragonfly import (Grammar, AppContext, MappingRule, CompoundRule, Dictation, Function,
-                       Mimic, Key, Text, RuleRef, Repetition)
+from series_mapping_rule import SeriesMappingRule
+from dragonfly import (Grammar, AppContext, MappingRule, Dictation, Function,
+                        Key, Text)
 
 gvim_context = AppContext(executable="gvim")
 atom_context = AppContext(executable="atom")
 grammar      = Grammar("gvim", context=(gvim_context|atom_context))
-
 
 
 # variable/function name formatting functions
@@ -33,27 +32,6 @@ def studley_case_action(text=""):
     s = "".join(words)
     Text(s).execute()
 
-
-# SeriesMappingRule adapted from here:
-# https://github.com/barrysims/dragonfly/blob/master/utils/series_mapping_rule.py
-# This class allows us to do CCR (continuous command recognition).
-# CCR lets us combine commands seamlessly together in one utterance.
-
-class SeriesMappingRule(CompoundRule):
-
-    def __init__(self, mapping_rule):
-        single = RuleRef(rule=mapping_rule)
-        series = Repetition(single, min=1, max=16, name="series")
-
-        compound_spec = "<series>"
-        compound_extras = [series]
-        CompoundRule.__init__(self, spec=compound_spec,
-                              extras=compound_extras, exported=True)
-
-    def _process_recognition(self, node, extras):  # @UnusedVariable
-        series = extras["series"]
-        for action in series:
-            action.execute()
 
 # Gvim rules adapted from here:
 # https://github.com/davitenio/dragonfly-macros/blob/master/gvim.py
@@ -152,7 +130,8 @@ mapping_rule = MappingRule(
         "(hash|hashtag)"          : Key("hash"),
         "dollar [sign]"           : Key("dollar"),
         "comma"                   : Key("comma"),
-        "[<text_left>] (dot|point) [<text_right>]" : Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
+        "[<text_left>] (dot|point) [<text_right>]" : \
+        Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
         "slash"                   : Key("slash"),
         "colon"                   : Key("colon"),
         # This doesn't work for some reason.
@@ -182,7 +161,7 @@ mapping_rule = MappingRule(
         "[(single|S)] (quote|quotes)" : Key("squote"),   # '
         "(double|D) (quote|quotes)"   : Key("dquote"),   # "
 
-        # atom github ide specific
+        # atom ide specific
         "Go to line" : Key("c-g"),
         "Toggle comment" : Key("c-/"),
         "Toggle tree [view]" : Key("c-\\"),
@@ -219,8 +198,8 @@ mapping_rule = MappingRule(
         "(triple|strict) (equal|equals)" : Text("==="),
 
         # -- function definition
-        #"deaf": Text("def ():") + Key("left:2"),                # python
-        "function" : Text("function () {}") + Key("left:5"),     # javascript
+        # "deaf": Text("def ():") + Key("left:2"),               # python
+        # "function" : Text("function () {}") + Key("left:5"),   # javascript
 
         # -- loop definition
         "for loop"   : Text("for() {};")   + Key("left:5"),
