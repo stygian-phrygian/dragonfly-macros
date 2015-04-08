@@ -141,7 +141,7 @@ mapping_rule = MappingRule(
 
 
         "(space|spy|spine)"       : Key("space"),
-        "tab"                     : Key("tab"),
+        "(tab|tabby|Debbie)"      : Key("tab"),
         "(newline|enter|slap)"    : Key("enter"),
         "(mod|percent) [sign]"    : Key("percent"),
         "(asterisk|star)"         : Key("asterisk"),
@@ -183,7 +183,13 @@ mapping_rule = MappingRule(
         "(double|D) (quote|quotes)"   : Key("dquote"),   # "
 
         # atom github ide specific
-
+        "Go to line" : Key("c-g"),
+        "Toggle comment" : Key("c-/"),
+        "Toggle tree [view]" : Key("c-\\"),
+        "Fuzzy find" : Key("c-t"),
+        "Close tab" : Key("c-t"),
+        "(Find|Finding) [in current] file" : Key("c-f"),
+        "(Find|Finding) [in] project" : Key("cs-f"),
 
 
 
@@ -213,7 +219,7 @@ mapping_rule = MappingRule(
         "(triple|strict) (equal|equals)" : Text("==="),
 
         # -- function definition
-        #"deaf": Text("def ():") + Key("left:2"),               # python
+        #"deaf": Text("def ():") + Key("left:2"),                # python
         "function" : Text("function () {}") + Key("left:5"),     # javascript
 
         # -- loop definition
