@@ -3,9 +3,11 @@ from series_mapping_rule import SeriesMappingRule
 from dragonfly import (Grammar, AppContext, MappingRule, Dictation, Function,
                         Key, Text)
 
-gvim_context = AppContext(executable="gvim")
 atom_context = AppContext(executable="atom")
-grammar      = Grammar("gvim", context=(gvim_context|atom_context))
+gvim_context = AppContext(executable="gvim")
+atom_grammar       = Grammar("atom", context=atom_context)
+# gvim_grammar TODO
+text_edit_grammar  = Grammar("text_edit", context=(gvim_context|atom_context))
 
 
 # variable/function name formatting functions
@@ -36,8 +38,8 @@ def studley_case_action(text=""):
 # Gvim rules adapted from here:
 # https://github.com/davitenio/dragonfly-macros/blob/master/gvim.py
 
-mapping_rule = MappingRule(
-    name="gvim",
+text_edit_mapping_rule = MappingRule(
+    name="text_edit",
     exported=False,
     mapping={
 
@@ -130,8 +132,7 @@ mapping_rule = MappingRule(
         "(hash|hashtag)"          : Key("hash"),
         "dollar [sign]"           : Key("dollar"),
         "comma"                   : Key("comma"),
-        "[<text_left>] (dot|point) [<text_right>]" : \
-        Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
+        "[<text_left>] (dot|point) [<text_right>]" : Text("%(text_left)s") + Key("dot") + Text("%(text_right)s"),
         "slash"                   : Key("slash"),
         "colon"                   : Key("colon"),
         # This doesn't work for some reason.
@@ -161,17 +162,6 @@ mapping_rule = MappingRule(
         "[(single|S)] (quote|quotes)" : Key("squote"),   # '
         "(double|D) (quote|quotes)"   : Key("dquote"),   # "
 
-        # atom ide specific
-        "Go to line" : Key("c-g"),
-        "Toggle comment" : Key("c-/"),
-        "Toggle tree [view]" : Key("c-\\"),
-        "Fuzzy find" : Key("c-t"),
-        "Close tab" : Key("c-t"),
-        "(Find|Finding) [in current] file" : Key("c-f"),
-        "(Find|Finding) [in] project" : Key("cs-f"),
-
-
-
         # programming aids
 
         # -- variable/function naming
@@ -197,9 +187,16 @@ mapping_rule = MappingRule(
         "(strict|double) not equals"     : Text("!=="),
         "(triple|strict) (equal|equals)" : Text("==="),
 
+
+        ###################################################
+        # Everything below is language specific
+        # We need to factor this out into separate rules
+        ###################################################
+
+
         # -- function definition
         # "deaf": Text("def ():") + Key("left:2"),               # python
-        # "function" : Text("function () {}") + Key("left:5"),   # javascript
+        "function" : Text("function () {}") + Key("left:5"),   # javascript
 
         # -- loop definition
         "for loop"   : Text("for() {};")   + Key("left:5"),
@@ -207,7 +204,7 @@ mapping_rule = MappingRule(
         "while loop" : Text("while() {};") + Key("left:5"),
 
         # -- helpful shortcuts''
-        "punk" : Text(";") + Key("enter"),
+        #"punk" : Text(";") + Key("enter"),
 
         # -- common phrases
 
@@ -240,15 +237,50 @@ mapping_rule = MappingRule(
     )
 
 
-# Add the action rule to the grammar instance.
+atom_mapping_rule = MappingRule(
+    name="atom",
+    exported=False,
+    mapping={
 
-gvim_rule = SeriesMappingRule(mapping_rule)
-grammar.add_rule(gvim_rule)
-#---------------------------------------------------------------------------
-# Load the grammar instance and define how to unload it.
-grammar.load()
-# Unload function which will be called by natlink at unload time.
+        # atom ide specific
+        "Go to line" : Key("c-g"),
+        "Toggle comment" : Key("c-slash"),
+        "Toggle tree [view]" : Key("c-backslash"),
+        "Fuzzy find" : Key("c-t"),
+        "Close tab" : Key("c-t"),
+        "(Find|Finding) [in current] file" : Key("c-f"),
+        "(Find|Finding) [in] project" : Key("cs-f"),
+        "New line above" : Key("cs-enter"),
+        "New line below" : Key("c-enter"),
+
+        # -- helpful shortcuts
+        # I have this mapped to add a semicolon at the end of the line
+        # for some reason Key("c-semicolon") doesn't work
+        "punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up")
+        
+        },
+    extras=[           # Special elements in the specs of the mapping.
+            Dictation("text"),
+           ],
+    defaults={
+            "text" : "",
+             }
+    )
+
+
+text_edit_rule = SeriesMappingRule(text_edit_mapping_rule)
+text_edit_grammar.add_rule(text_edit_rule)
+text_edit_grammar.load()
+
+atom_rule = SeriesMappingRule(atom_mapping_rule)
+atom_grammar.add_rule(atom_rule)
+atom_grammar.load()
+
 def unload():
-    global grammar
-    if grammar: grammar.unload()
-    grammar = None
+    global text_edit_grammar, atom_grammar
+
+    if text_edit_grammar: text_edit_grammar.unload()
+    text_edit_grammar = None
+
+    if atom_grammar: atom_grammar.unload()
+    atom_grammar      = None
