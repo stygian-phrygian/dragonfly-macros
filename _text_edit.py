@@ -261,6 +261,8 @@ atom_mapping_rule = MappingRule(
         "Go [to] line [<text>]"            : Key("c-g/40") + Text("%(text)s"),
         "New line above"                   : Key("cs-enter"),
         "New line below"                   : Key("c-enter"),
+        # jumpy atom extension - JESUS this is helpful
+        "Jumpy"                            : Key("s-enter"),
         # text manipulation
         # *see included DNS commands above*
         # window views
@@ -272,6 +274,7 @@ atom_mapping_rule = MappingRule(
         "Toggle comment"                   : Key("c-slash"),
         "Toggle tree [view]"               : Key("c-backslash"),
         "Show snippets"                    : Key("as-s"),
+        "Show command palette"             : Key("cs-p"),
         # finding things
         "Fuzzy find"                       : Key("c-t"),
         "(Find|Finding) [in current] file" : Key("c-f"),
@@ -286,8 +289,8 @@ atom_mapping_rule = MappingRule(
         # -- helpful shortcuts
         # I have this mapped to add a semicolon at the end of the line
         # for some reason Key("c-semicolon") doesn't work
-        "punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up"),
-        "thug" : Key("end,comma")
+        #"punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up"),
+        #"thug" : Key("end,comma")
 
         },
     extras=[           # Special elements in the specs of the mapping.
