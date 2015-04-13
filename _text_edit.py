@@ -271,6 +271,7 @@ atom_mapping_rule = MappingRule(
         "Tab right" 	                   : Key("c-tab"),
         "Toggle comment"                   : Key("c-slash"),
         "Toggle tree [view]"               : Key("c-backslash"),
+        "Show snippets"                    : Key("as-s"),
         # finding things
         "Fuzzy find"                       : Key("c-t"),
         "(Find|Finding) [in current] file" : Key("c-f"),
