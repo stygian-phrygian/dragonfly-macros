@@ -253,35 +253,37 @@ atom_mapping_rule = MappingRule(
         # "delete line"
         # "paste"
         # are already part of Dragon Naturally Speaking
-        # BUT they are not very composable.
+        # BUT they are *not* very composable.
+        # Can we write macros that shadow these commands?
 
         # cursor movement
         # "Go [to] line" doesn't seem to play too well when you say numbers
         # unsure why...
-        "Go [to] line [<text>]"            : Key("c-g/40") + Text("%(text)s"),
-        "New line above"                   : Key("cs-enter"),
-        "New line below"                   : Key("c-enter"),
+        "Go [to] line [<text>]"              : Key("c-g/40") + Text("%(text)s"),
+        "New line above"                     : Key("cs-enter"),
+        "New line below"                     : Key("c-enter"),
         # jumpy atom extension - JESUS this is helpful
-        "Jumpy"                            : Key("s-enter"),
+        "Jumpy"                              : Key("s-enter"),
         # text manipulation
         # *see included DNS commands above*
         # window views
-        "New (tab|file)"                   : Key("c-n"),
-        "New window"                       : Key("cs-n"),
-        "Close tab"                        : Key("c-w"),
-        "Tab left"                         : Key("cs-tab"),
-        "Tab right" 	                   : Key("c-tab"),
-        "Toggle comment"                   : Key("c-slash"),
-        "Toggle tree [view]"               : Key("c-backslash"),
-        "Show snippets"                    : Key("as-s"),
-        "Show command palette"             : Key("cs-p"),
+        "New (tab|file)"                     : Key("c-n"),
+        "New window"                         : Key("cs-n"),
+        "Close tab"                          : Key("c-w"),
+        "Tab left"                           : Key("cs-tab"),
+        "Tab right" 	                     : Key("c-tab"),
+        "Toggle comment"                     : Key("c-slash"),
+        "Toggle tree [view]"                 : Key("c-backslash"),
+        "Show snippets"                      : Key("as-s"),
+        "Show command palette"               : Key("cs-p"),
+        "(Show|Open) (settings|preferences)" : Key("c-comma"),
         # finding things
-        "Fuzzy find"                       : Key("c-t"),
-        "(Find|Finding) [in current] file" : Key("c-f"),
-        "(Find|Finding) [in] project"      : Key("cs-f"),
+        "Fuzzy find"                         : Key("c-t"),
+        "(Find|Finding) [in current] file"   : Key("c-f"),
+        "(Find|Finding) [in] project"        : Key("cs-f"),
         # save file
-        "save [file]"                      : Key("c-s"),
-        "save [file] as [<text>]"          : Key("cs-s/25") + Text("%(text)s"),
+        "save [file]"                        : Key("c-s"),
+        "save [file] as [<text>]"            : Key("cs-s/25") + Text("%(text)s"),
 
 
 
