@@ -24,7 +24,7 @@ chrome_rule = MappingRule(
         "(enter|submit)"                     : Key("enter"),
         "reopen [closed tab]"                : Key("cs-t"),
         "save [file]"                        : Key("c-s"),
-        "save [file] as <text>"              : Key("c-s") + Text("%(text)s"),
+        "save [file] as <text>"              : Key("cs-s") + Text("%(text)s"),
         "find [in] [the] [page]"             : Key("c-f"),
         "show downloads"                     : Key("c-j"),
         "show history"                       : Key("c-h"),
