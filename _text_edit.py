@@ -208,6 +208,7 @@ text_edit_mapping_rule = MappingRule(
 
         # -- common phrases
 
+        # TODO FACTOR THIS OUT
         # -------- javascript specific
         "variable [<text>]" : Text("var %(text)s"),
         "require [<text>]"  : Text("require()") + Key("left") + Text("%(text)s"),
@@ -243,21 +244,22 @@ atom_mapping_rule = MappingRule(
     mapping={
 
         # atom ide specific
-        "Go to line" : Key("c-g"),
+        "Go [to] line" : Key("c-g"),
+        "New line above" : Key("cs-enter"),
+        "New line below" : Key("c-enter"),
         "Toggle comment" : Key("c-slash"),
         "Toggle tree [view]" : Key("c-backslash"),
         "Fuzzy find" : Key("c-t"),
-        "Close tab" : Key("c-t"),
+        "Close tab" : Key("c-w"),
         "(Find|Finding) [in current] file" : Key("c-f"),
         "(Find|Finding) [in] project" : Key("cs-f"),
-        "New line above" : Key("cs-enter"),
-        "New line below" : Key("c-enter"),
+
 
         # -- helpful shortcuts
         # I have this mapped to add a semicolon at the end of the line
         # for some reason Key("c-semicolon") doesn't work
         "punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up")
-        
+
         },
     extras=[           # Special elements in the specs of the mapping.
             Dictation("text"),
