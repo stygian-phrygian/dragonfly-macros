@@ -123,6 +123,8 @@ text_edit_mapping_rule = MappingRule(
         "(space|spy|spine)"       : Key("space"),
         "(tab|tabby|Debbie)"      : Key("tab"),
         "(newline|enter|slap)"    : Key("enter"),
+        "(Homey|Home)"            : Key("home"),
+        "(Endy|Andy)"             : Key("end"),
         "(mod|percent) [sign]"    : Key("percent"),
         "(asterisk|star)"         : Key("asterisk"),
         "plus [sign]"             : Key("plus"),
@@ -243,22 +245,48 @@ atom_mapping_rule = MappingRule(
     exported=False,
     mapping={
 
-        # atom ide specific
-        "Go [to] line" : Key("c-g"),
-        "New line above" : Key("cs-enter"),
-        "New line below" : Key("c-enter"),
-        "Toggle comment" : Key("c-slash"),
-        "Toggle tree [view]" : Key("c-backslash"),
-        "Fuzzy find" : Key("c-t"),
-        "Close tab" : Key("c-w"),
+        # -- atom ide specific
+        # FIXME
+        # The following commands:
+        # "(go|move) (up|down|left|right) [number]"
+        # "copy line"
+        # "delete line"
+        # "paste"
+        # are already part of Dragon Naturally Speaking
+        # BUT they are not very composable.
+
+        # cursor movement
+        # "Go [to] line" doesn't seem to play too well when you say numbers
+        # unsure why...
+        "Go [to] line [<text>]"            : Key("c-g/40") + Text("%(text)s"),
+        "New line above"                   : Key("cs-enter"),
+        "New line below"                   : Key("c-enter"),
+        # text manipulation
+        # *see included DNS commands above*
+        # window views
+        "New (tab|file)"                   : Key("c-n"),
+        "New window"                       : Key("cs-n"),
+        "Close tab"                        : Key("c-w"),
+        "Tab left"                         : Key("cs-tab"),
+        "Tab right" 	                   : Key("c-tab"),
+        "Toggle comment"                   : Key("c-slash"),
+        "Toggle tree [view]"               : Key("c-backslash"),
+        # finding things
+        "Fuzzy find"                       : Key("c-t"),
         "(Find|Finding) [in current] file" : Key("c-f"),
-        "(Find|Finding) [in] project" : Key("cs-f"),
+        "(Find|Finding) [in] project"      : Key("cs-f"),
+        # save file
+        "save [file]"                      : Key("c-s"),
+        "save [file] as [<text>]"          : Key("cs-s/25") + Text("%(text)s"),
+
+
 
 
         # -- helpful shortcuts
         # I have this mapped to add a semicolon at the end of the line
         # for some reason Key("c-semicolon") doesn't work
-        "punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up")
+        "punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up"),
+        "thug" : Key("end,comma")
 
         },
     extras=[           # Special elements in the specs of the mapping.
