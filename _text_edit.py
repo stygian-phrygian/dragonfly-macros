@@ -5,9 +5,12 @@ from dragonfly import (Grammar, AppContext, MappingRule, Dictation, Function,
 
 atom_context = AppContext(executable="atom")
 gvim_context = AppContext(executable="gvim")
+supercollider_context = AppContext(executable="supercollider")
+
 atom_grammar       = Grammar("atom", context=atom_context)
 # gvim_grammar TODO
-text_edit_grammar  = Grammar("text_edit", context=(gvim_context|atom_context))
+all_contexts = (atom_context|gvim_context|supercollider_context)
+text_edit_grammar  = Grammar("text_edit", context=all_contexts)
 
 
 # variable/function name formatting functions
@@ -185,7 +188,7 @@ text_edit_mapping_rule = MappingRule(
         "curly [block] [<inner_text>]"   : Text("{%(inner_text)s}") + Key("left"),
 
         # -- comparison
-        # "<=" & ">=" are already available thanks to CCR from SeriesMappingRule 
+        # "<=" & ">=" are already available thanks to CCR from SeriesMappingRule
         #
         "double (equal|equals)"          : Text("=="),
         "(strict|double) not equals"     : Text("!=="),

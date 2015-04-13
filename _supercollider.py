@@ -32,6 +32,7 @@ supercollider_rule = MappingRule(
             # ugens TODO (there's a lot of ugens)
             #----"(sine|sign) (oscillator|us)":    Text("SinOsc"),
             "(sine|sign)"                    : Text("Sin"),
+            "saw"                            : Text("Saw"),
             "(oscillator|us)"                : Text("Osc"),
             "(envelope|and) (generator|jen)" : Text("EnvGen"),
             "clang"                          : Text("Klang"),
