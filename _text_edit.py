@@ -161,6 +161,8 @@ text_edit_mapping_rule = MappingRule(
         "(or|our|are|R) bracket"      : Key("rbracket"), # ]
         "L angle"                     : Key("langle"),   # <
         "(or|our|are|R) angle"        : Key("rangle"),   # >
+        "less than [or]"              : Key("langle"),   # -- synonyms
+        "greater than [or]"           : Key("rangle"),   # --
         "[(single|S)] (quote|quotes)" : Key("squote"),   # '
         "(double|D) (quote|quotes)"   : Key("dquote"),   # "
 
@@ -183,8 +185,8 @@ text_edit_mapping_rule = MappingRule(
         "curly [block] [<inner_text>]"   : Text("{%(inner_text)s}") + Key("left"),
 
         # -- comparison
-        # Implementing "<=" & ">=" has caused somewhat unpredictable
-        # conflicts with the other macros.
+        # "<=" & ">=" are already available thanks to CCR from SeriesMappingRule 
+        #
         "double (equal|equals)"          : Text("=="),
         "(strict|double) not equals"     : Text("!=="),
         "(triple|strict) (equal|equals)" : Text("==="),
@@ -263,6 +265,7 @@ atom_mapping_rule = MappingRule(
         "New line above"                     : Key("cs-enter"),
         "New line below"                     : Key("c-enter"),
         # jumpy atom extension - JESUS this is helpful
+        # it's the atom equivalent of vim-easymotion
         "Jumpy"                              : Key("s-enter"),
         # text manipulation
         # *see included DNS commands above*
