@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from series_mapping_rule import SeriesMappingRule
 from dragonfly import (Grammar, AppContext, MappingRule, Dictation, Function,
-                        Key, Text)
+                        Integer, Key, Text)
 
 atom_context = AppContext(executable="atom")
 gvim_context = AppContext(executable="gvim")
@@ -259,14 +259,29 @@ atom_mapping_rule = MappingRule(
         # "paste"
         # are already part of Dragon Naturally Speaking
         # BUT they are *not* very composable.
-        # Can we write macros that shadow these commands?
+        # We write macros that shadow these commands.
 
         # cursor movement
         # "Go [to] line" doesn't seem to play too well when you say numbers
         # unsure why...
-        "Go [to] line [<text>]"              : Key("c-g/40") + Text("%(text)s"),
-        "New line above"                     : Key("cs-enter"),
-        "New line below"                     : Key("c-enter"),
+        "(Move|Moo) up    [<n>]"               : Key("up:%(n)d"),
+        "(Move|Moo) down  [<n>]"               : Key("down:%(n)d"),
+        "(Move|Moo) left  [<n>]"               : Key("left:%(n)d"),
+        "(Move|Moo) right [<n>]"               : Key("right:%(n)d"),
+        "Copy"                                 : Key("c-c"),
+        "Paste"                                : Key("c-v"),
+        "Copy line"                            : Key("c-l,c-c"),
+        "Delete line"                          : Key("c-l,delete,up,end"),
+        "Go [to] line [<text>]"                : Key("c-g") + Text("%(text)s"),
+        "Indent [(line|lines)] [<n>]"          : Key("c-rbracket:%(n)d"),
+        "Out (dent|tent) [(line|lines)] [<n>]" : Key("c-lbracket:%(n)d"),
+        "New line above"                       : Key("cs-enter"),
+        "New line below"                       : Key("c-enter"),
+        # sticky keys (...this is kind of unusable)
+        "Shift on"                             : Key("shift:down"),
+        "Shift off"                            : Key("shift:up"),
+        "Control on"                           : Key("ctrl:down"),
+        "Control off"                          : Key("ctrl:up"),
         # jumpy atom extension - JESUS this is helpful
         # it's the atom equivalent of vim-easymotion
         "Jumpy"                              : Key("s-enter"),
@@ -303,9 +318,11 @@ atom_mapping_rule = MappingRule(
         },
     extras=[           # Special elements in the specs of the mapping.
             Dictation("text"),
+            Integer("n", 1, 50)
            ],
     defaults={
             "text" : "",
+            "n"    : 1
              }
     )
 
