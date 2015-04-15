@@ -9,7 +9,7 @@ grammar        = Grammar("chrome", context=chrome_context)
 chrome_rule = MappingRule(
     name="chrome",
     mapping={
-        "dictate <text>"                     : Key("%(text)s"),
+        "dictate <text>"                     : Text("%(text)s"),
         "[open] new (window|page)"           : Key("c-n"),
         "[open] new incognito (window|page)" : Key("cs-n"),
         "[open] new tab"                     : Key("c-t"),
