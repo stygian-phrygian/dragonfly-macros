@@ -276,6 +276,9 @@ atom_mapping_rule = MappingRule(
         "Out (dent|tent) [(line|lines)] [<n>]" : Key("c-lbracket:%(n)d"),
         "New line above"                       : Key("cs-enter"),
         "New line below"                       : Key("c-enter"),
+        # -- word movement (latin for left and right)
+        "Sinister [<n>]"                       : Key("c-left:%(n)d"),
+        "Dexter   [<n>]"                       : Key("c-right:%(n)d"),
         # -- sticky keys (this is kind of unusable)
         "Shift on"                             : Key("shift:down"),
         "Shift off"                            : Key("shift:up"),
