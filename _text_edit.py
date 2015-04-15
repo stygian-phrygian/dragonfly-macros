@@ -279,6 +279,8 @@ atom_mapping_rule = MappingRule(
         # -- word movement (latin for left and right)
         "Sinister [<n>]"                       : Key("c-left:%(n)d"),
         "Dexter   [<n>]"                       : Key("c-right:%(n)d"),
+        # -- delimiter movement
+        "(Match|Matching) (bracket|brace|paren)" : Key("c-m"),
         # -- sticky keys (this is kind of unusable)
         "Shift on"                             : Key("shift:down"),
         "Shift off"                            : Key("shift:up"),
