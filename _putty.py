@@ -12,6 +12,8 @@ putty_rule = MappingRule(
     name="putty",
     mapping={
         # characters
+        "(tab|tabby|Debbie)"            : Key("tab"),
+        "Shift (tab|tabby|Debbie)"      : Key("s-tab"),
         "(slap|newline|enter)"          : Key("enter"),
         "(splat|star|asterisk)"         : Key("asterisk"),
         "(hash|hashtag)"                : Key("hash"),
