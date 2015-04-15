@@ -251,19 +251,16 @@ atom_mapping_rule = MappingRule(
     mapping={
 
         # -- atom ide specific
-        # FIXME
         # The following commands:
         # "(go|move) (up|down|left|right) [number]"
-        # "copy line"
-        # "delete line"
+        # "copy"   & "copy line"
+        # "delete" & "delete line"
         # "paste"
         # are already part of Dragon Naturally Speaking
         # BUT they are *not* very composable.
         # We write macros that shadow these commands.
 
-        # cursor movement
-        # "Go [to] line" doesn't seem to play too well when you say numbers
-        # unsure why...
+        # -- cursor movement
         "(Move|Moo) up    [<n>]"               : Key("up:%(n)d"),
         "(Move|Moo) down  [<n>]"               : Key("down:%(n)d"),
         "(Move|Moo) left  [<n>]"               : Key("left:%(n)d"),
@@ -272,44 +269,43 @@ atom_mapping_rule = MappingRule(
         "Paste"                                : Key("c-v"),
         "Copy line"                            : Key("c-l,c-c"),
         "Delete line"                          : Key("c-l,delete,up,end"),
+        # "Go [to] line" doesn't seem to play too well when you say numbers
+        # unsure why...
         "Go [to] line [<text>]"                : Key("c-g") + Text("%(text)s"),
         "Indent [(line|lines)] [<n>]"          : Key("c-rbracket:%(n)d"),
         "Out (dent|tent) [(line|lines)] [<n>]" : Key("c-lbracket:%(n)d"),
         "New line above"                       : Key("cs-enter"),
         "New line below"                       : Key("c-enter"),
-        # sticky keys (...this is kind of unusable)
+        # -- sticky keys (this is kind of unusable)
         "Shift on"                             : Key("shift:down"),
         "Shift off"                            : Key("shift:up"),
         "Control on"                           : Key("ctrl:down"),
         "Control off"                          : Key("ctrl:up"),
-        # jumpy atom extension - JESUS this is helpful
+        # -- jumpy atom extension ( JESUS this is helpful )
         # it's the atom equivalent of vim-easymotion
-        "Jumpy"                              : Key("s-enter"),
-        # text manipulation
-        # *see included DNS commands above*
-        # window views
-        "New (tab|file)"                     : Key("c-n"),
-        "New window"                         : Key("cs-n"),
-        "Close tab"                          : Key("c-w"),
-        "Tab left"                           : Key("cs-tab"),
-        "Tab right" 	                     : Key("c-tab"),
-        "Toggle comment"                     : Key("c-slash"),
-        "Toggle tree [view]"                 : Key("c-backslash"),
-        "Show snippets"                      : Key("as-s"),
-        "Show command palette"               : Key("cs-p"),
-        "(Show|Open) (settings|preferences)" : Key("c-comma"),
+        "Jumpy"                                : Key("s-enter"),
+        # -- window manipulation
+        "New (tab|file)"                       : Key("c-n"),
+        "New window"                           : Key("cs-n"),
+        "Close tab"                            : Key("c-w"),
+        "Tab left  [<n>]"                      : Key("cs-tab:%(n)d"),
+        "Tab right [<n>]" 	                   : Key("c-tab:%(n)d"),
+        "Toggle comment"                       : Key("c-slash"),
+        "Toggle tree [view]"                   : Key("c-backslash"),
+        "Show snippets"                        : Key("as-s"),
+        "Show command palette"                 : Key("cs-p"),
+        "(Show|Open) (settings|preferences)"   : Key("c-comma"),
+        "Open file"                            : Key("c-o"),
+        "Open (folder|project)"                : Key("cs-o"),
         # finding things
-        "Fuzzy find"                         : Key("c-t"),
-        "(Find|Finding) [in current] file"   : Key("c-f"),
-        "(Find|Finding) [in] project"        : Key("cs-f"),
+        "Fuzzy find"                           : Key("c-t"),
+        "(Find|Finding) [in current] file"     : Key("c-f"),
+        "(Find|Finding) [in] project"          : Key("cs-f"),
         # save file
-        "save [file]"                        : Key("c-s"),
-        "save [file] as [<text>]"            : Key("cs-s/25") + Text("%(text)s"),
+        "save [file]"                          : Key("c-s"),
+        "save [file] as [<text>]"              : Key("cs-s/25") + Text("%(text)s"),
 
-
-
-
-        # -- helpful shortcuts
+        # -- helpful shortcuts?
         # I have this mapped to add a semicolon at the end of the line
         # for some reason Key("c-semicolon") doesn't work
         #"punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up"),
