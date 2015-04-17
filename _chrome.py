@@ -22,7 +22,7 @@ chrome_rule = MappingRule(
         "[go] [<n>] forward"                 : Key("a-right:%(n)d"),
         "[go to] address [bar]"              : Key("c-l"),
         "(enter|submit)"                     : Key("enter"),
-        "reopen [closed tab]"                : Key("cs-t"),
+        "(reopen|unclose) [(window|tab)]"    : Key("cs-t"),
         "save [file]"                        : Key("c-s"),
         "save [file] as <text>"              : Key("cs-s") + Text("%(text)s"),
         "find [in] [the] [page]"             : Key("c-f"),
