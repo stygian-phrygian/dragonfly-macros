@@ -35,6 +35,7 @@ putty_rule = MappingRule(
         "get commit"                    : Text('git commit -m ""') + Key("left"),
         "get status"                    : Text("git status ") + Key("enter"),
         "get push"                      : Text("git push "),
+        "get push origin master"        : Text("git push origin master "),
         "get pull"                      : Text("git pull "),
         "get check out"                 : Text("git checkout ") + Key("tab"),
         "get fetch"                     : Text("git fetch ") + Key("tab"),
