@@ -31,7 +31,8 @@ chrome_rule = MappingRule(
         "view [page] source"                 : Key("c-u"),
         "zoom out [<n>] [(time|times)]"      : Key("c-minus:%(n)d"),
         "zoom in  [<n>] [(time|times)]"      : Key("c-plus:%(n)d"),
-        "refresh"                            : Key("c-r"),File save
+        "refresh"                            : Key("c-r"),
+        "view source"                        : Key("c-u")
     },
     extras=[
         Integer("n", 1, 40),
