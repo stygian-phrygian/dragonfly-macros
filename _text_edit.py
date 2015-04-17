@@ -309,6 +309,9 @@ atom_mapping_rule = MappingRule(
         # save file
         "save [file]"                          : Key("c-s"),
         "save [file] as [<text>]"              : Key("cs-s/25") + Text("%(text)s"),
+        # previews
+        "(Toggle|Preview) markdown"            : Key("cs-m"),
+        "(Toggle|Preview) HTML"                : Key("c-p"),
 
         # -- helpful shortcuts?
         # I have this mapped to add a semicolon at the end of the line
