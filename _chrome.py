@@ -33,8 +33,8 @@ chrome_rule = MappingRule(
         "zoom in  [<n>] [(time|times)]"      : Key("c-plus:%(n)d"),
         "refresh"                            : Key("c-r"),
         "view source"                        : Key("c-u"),
-        "(show|toggle) developer [tools]"    : Key("cs-i"),
-        "(show|toggle) javascript console"   : Key("cs-j"),
+        "(show|toggle|open) developer [tools]"  : Key("cs-i"),
+        "(show|toggle|open) javascript console" : Key("cs-j"),
     },
     extras=[
         Integer("n", 1, 40),
