@@ -222,10 +222,11 @@ text_edit_mapping_rule = MappingRule(
         "aargh"             : Text("arg"),
         "aarghz"            : Text("args"),
         "FS"                : Text("fs"),
-        "sink"              : Text("Sync"),
+        "sink"              : Text("sync"),
+        "a sink"            : Text("async"),
         "2 string"          : Text("toString"),
         "(error|air)"       : Text("err"),
-        "consul"            : Text("console"),
+        "(consul|counsel|console)" : Text("console"),
         "you (till|tell)"   : Text("util"),
         "HTTP"              : Text("http"),
         "(ex|ext) name"     : Text("extname")
