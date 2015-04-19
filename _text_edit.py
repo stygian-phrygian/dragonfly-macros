@@ -271,6 +271,16 @@ atom_mapping_rule = MappingRule(
         #    (latin for left and right)
         "Sinister [<n>]"                         : Key("c-left:%(n)d"),
         "Dexter   [<n>]"                         : Key("c-right:%(n)d"),
+        
+        # -- sticky cursor movement
+        "(Shift|Shiv) [(Move|Moo)] up    [<n>]"  : Key("s-up:%(n)d"),
+        "(Shift|Shiv) [(Move|Moo)] down  [<n>]"  : Key("s-down:%(n)d"),
+        "(Shift|Shiv) [(Move|Moo)] left  [<n>]"  : Key("s-left:%(n)d"),
+        "(Shift|Shiv) [(Move|Moo)] right [<n>]"  : Key("s-right:%(n)d"),
+        "(Shift|Shiv) (homey|home)"              : Key("s-home"),
+        "(Shift|Shiv) (endy|andy)"               : Key("s-end"),
+        "(Shift|Shiv) sinister [<n>]"            : Key("cs-left:%(n)d"),
+        "(Shift|Shiv) dexter   [<n>]"            : Key("cs-right:%(n)d"),
 
         # -- cursor movement by delimiter
         "(Match|Matching) (bracket|brace|paren)" : Key("c-m"),
@@ -297,16 +307,6 @@ atom_mapping_rule = MappingRule(
         "Move line above [<n>]"                  : Key('c-up:%(n)d'),
         "Move line below [<n>]"                  : Key('c-down:%(n)d'),
         "Join (line|lines)"                      : Key("c-j"),
-
-        # -- sticky cursor movement
-        "(Shift|Shiv) [(Move|Moo)] up    [<n>]"  : Key("s-up:%(n)d"),
-        "(Shift|Shiv) [(Move|Moo)] down  [<n>]"  : Key("s-down:%(n)d"),
-        "(Shift|Shiv) [(Move|Moo)] left  [<n>]"  : Key("s-left:%(n)d"),
-        "(Shift|Shiv) [(Move|Moo)] right [<n>]"  : Key("s-right:%(n)d"),
-        "(Shift|Shiv) (homey|home)"              : Key("s-home"),
-        "(Shift|Shiv) (endy|andy)"               : Key("s-end"),
-        "(Shift|Shiv) sinister [<n>]"            : Key("cs-left:%(n)d"),
-        "(Shift|Shiv) dexter   [<n>]"            : Key("cs-right:%(n)d"),
 
         # -- window manipulation
         "New (tab|file)"                         : Key("c-n"),
