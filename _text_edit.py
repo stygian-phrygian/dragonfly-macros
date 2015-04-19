@@ -339,6 +339,9 @@ atom_mapping_rule = MappingRule(
         "(Toggle|Preview) markdown"              : Key("cs-m"),
         "(Toggle|Preview) HTML"                  : Key("c-p"),
 
+        # language selectionChoosing which
+        "(Select|Choose|Switch) (language|grammar)" : Key("cs-l"),
+
         },
     extras=[           # Special elements in the specs of the mapping.
             Dictation("text"),
