@@ -271,7 +271,7 @@ atom_mapping_rule = MappingRule(
         #    (latin for left and right)
         "Sinister [<n>]"                         : Key("c-left:%(n)d"),
         "Dexter   [<n>]"                         : Key("c-right:%(n)d"),
-        
+
         # -- sticky cursor movement
         "(Shift|Shiv) [(Move|Moo)] up    [<n>]"  : Key("s-up:%(n)d"),
         "(Shift|Shiv) [(Move|Moo)] down  [<n>]"  : Key("s-down:%(n)d"),
@@ -281,6 +281,10 @@ atom_mapping_rule = MappingRule(
         "(Shift|Shiv) (endy|andy)"               : Key("s-end"),
         "(Shift|Shiv) sinister [<n>]"            : Key("cs-left:%(n)d"),
         "(Shift|Shiv) dexter   [<n>]"            : Key("cs-right:%(n)d"),
+
+        # -- token selection (very similar to above)
+        "(Select|Shift|Shiv) word"               : Key("c-d"),
+        "(Select|Shift|Shiv) line"               : Key("c-l"),
 
         # -- cursor movement by delimiter
         "(Match|Matching) (bracket|brace|paren)" : Key("c-m"),
