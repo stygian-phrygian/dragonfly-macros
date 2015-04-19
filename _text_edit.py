@@ -262,63 +262,78 @@ atom_mapping_rule = MappingRule(
         # We write macros that shadow these commands.
 
         # -- cursor movement
-        "(Move|Moo) up    [<n>]"               : Key("up:%(n)d"),
-        "(Move|Moo) down  [<n>]"               : Key("down:%(n)d"),
-        "(Move|Moo) left  [<n>]"               : Key("left:%(n)d"),
-        "(Move|Moo) right [<n>]"               : Key("right:%(n)d"),
-        "Copy"                                 : Key("c-c"),
-        "Paste"                                : Key("c-v"),
-        "Copy line"                            : Key("c-l,c-c"),
-        "Delete line"                          : Key("c-l,delete,up,end"),
-        # "Go [to] line" doesn't seem to play too well when you say numbers
-        # unsure why...
-        "Go [to] line [<text>]"                : Key("c-g") + Text("%(text)s"),
-        "Indent [(line|lines)] [<n>]"          : Key("c-rbracket:%(n)d"),
-        "Out (dent|tent) [(line|lines)] [<n>]" : Key("c-lbracket:%(n)d"),
-        "New line above"                       : Key("cs-enter"),
-        "New line below"                       : Key("c-enter"),
-        # -- word movement (latin for left and right)
-        "Sinister [<n>]"                       : Key("c-left:%(n)d"),
-        "Dexter   [<n>]"                       : Key("c-right:%(n)d"),
-        # -- delimiter movement
-        "(Match|Matching) (bracket|brace|paren)" : Key("c-m"),
-        # -- sticky keys (this is kind of unusable)
-        "Shift on"                             : Key("shift:down"),
-        "Shift off"                            : Key("shift:up"),
-        "Control on"                           : Key("ctrl:down"),
-        "Control off"                          : Key("ctrl:up"),
-        # -- jumpy atom extension ( JESUS this is helpful )
-        # it's the atom equivalent of vim-easymotion
-        "Jumpy"                                : Key("s-enter"),
-        # -- window manipulation
-        "New (tab|file)"                       : Key("c-n"),
-        "New window"                           : Key("cs-n"),
-        "Close tab"                            : Key("c-w"),
-        "Tab left  [<n>]"                      : Key("cs-tab:%(n)d"),
-        "Tab right [<n>]" 	                   : Key("c-tab:%(n)d"),
-        "Toggle comment"                       : Key("c-slash"),
-        "Toggle tree [view]"                   : Key("c-backslash"),
-        "Show snippets"                        : Key("as-s"),
-        "Show command palette"                 : Key("cs-p"),
-        "(Show|Open) (settings|preferences)"   : Key("c-comma"),
-        "Open file"                            : Key("c-o"),
-        "Open (folder|project)"                : Key("cs-o"),
-        # finding things
-        "Fuzzy find"                           : Key("c-t"),
-        "(Find|Finding) [in current] file"     : Key("c-f"),
-        "(Find|Finding) [in] project"          : Key("cs-f"),
-        # save file
-        "save [file]"                          : Key("c-s"),
-        "save [file] as [<text>]"              : Key("cs-s/25") + Text("%(text)s"),
-        # previews
-        "(Toggle|Preview) markdown"            : Key("cs-m"),
-        "(Toggle|Preview) HTML"                : Key("c-p"),
+        "(Move|Moo) up    [<n>]"                 : Key("up:%(n)d"),
+        "(Move|Moo) down  [<n>]"                 : Key("down:%(n)d"),
+        "(Move|Moo) left  [<n>]"                 : Key("left:%(n)d"),
+        "(Move|Moo) right [<n>]"                 : Key("right:%(n)d"),
 
-        # -- helpful shortcuts?
-        # I have this mapped to add a semicolon at the end of the line
-        # for some reason Key("c-semicolon") doesn't work
-        #"punk" : Key("ctrl:down") + Text(";") + Key("ctrl:up"),
-        #"thug" : Key("end,comma")
+        # -- cursor movement by word
+        #    (latin for left and right)
+        "Sinister [<n>]"                         : Key("c-left:%(n)d"),
+        "Dexter   [<n>]"                         : Key("c-right:%(n)d"),
+
+        # -- cursor movement by delimiter
+        "(Match|Matching) (bracket|brace|paren)" : Key("c-m"),
+
+        # -- cursor movement by line number
+        #    doesn't seem to play too well when you specify a <text>... unsure why
+        "Go [to] line [<text>]"                  : Key("c-g") + Text("%(text)s"),
+
+        # -- cursor movement by jumpy atom extension ( JESUS this is helpful )
+        #    it's the atom equivalent of vim-easymotion
+        "Jumpy"                                  : Key("s-enter"),
+
+        # -- text buffering
+        "Copy"                                   : Key("c-c"),
+        "Paste"                                  : Key("c-v"),
+        "Copy line"                              : Key("c-l,c-c"),
+        "Delete line"                            : Key("c-l,delete,up,end"),
+
+        # -- text movement
+        "Indent [(line|lines)] [<n>]"            : Key("c-rbracket:%(n)d"),
+        "Out (dent|tent) [(line|lines)] [<n>]"   : Key("c-lbracket:%(n)d"),
+        "New line above"                         : Key("cs-enter"),
+        "New line below"                         : Key("c-enter"),
+        "Move line above [<n>]"                  : Key('c-up:%(n)d'),
+        "Move line below [<n>]"                  : Key('c-down:%(n)d'),
+        "Join (line|lines)"                      : Key("c-j"),
+
+        # -- sticky cursor movement
+        "(Shift|Shiv) [(Move|Moo)] up    [<n>]"  : Key("s-up:%(n)d"),
+        "(Shift|Shiv) [(Move|Moo)] down  [<n>]"  : Key("s-down:%(n)d"),
+        "(Shift|Shiv) [(Move|Moo)] left  [<n>]"  : Key("s-left:%(n)d"),
+        "(Shift|Shiv) [(Move|Moo)] right [<n>]"  : Key("s-right:%(n)d"),
+        "(Shift|Shiv) (homey|home)"              : Key("s-home"),
+        "(Shift|Shiv) (endy|andy)"               : Key("s-end"),
+        "(Shift|Shiv) sinister [<n>]"            : Key("cs-left:%(n)d"),
+        "(Shift|Shiv) dexter   [<n>]"            : Key("cs-right:%(n)d"),
+
+        # -- window manipulation
+        "New (tab|file)"                         : Key("c-n"),
+        "New window"                             : Key("cs-n"),
+        "Close tab"                              : Key("c-w"),
+        "Tab left  [<n>]"                        : Key("cs-tab:%(n)d"),
+        "Tab right [<n>]" 	                     : Key("c-tab:%(n)d"),
+        "Toggle comment"                         : Key("c-slash"),
+        "Toggle tree [view]"                     : Key("c-backslash"),
+        "(Show|Open) snippets"                   : Key("as-s"),
+        "(Show|Open) command palette"            : Key("cs-p"),
+        "(Show|Open) (settings|preferences)"     : Key("c-comma"),
+        "Open file"                              : Key("c-o"),
+        "Open (folder|project)"                  : Key("cs-o"),
+
+        # finding things
+        "Fuzzy find"                             : Key("c-t"),
+        "(Find|Finding) [in current] file"       : Key("c-f"),
+        "(Find|Finding) [in] project"            : Key("cs-f"),
+
+        # save file
+        "save [file]"                            : Key("c-s"),
+        "save [file] as [<text>]"                : Key("cs-s/25") + Text("%(text)s"),
+
+        # previews
+        "(Toggle|Preview) markdown"              : Key("cs-m"),
+        "(Toggle|Preview) HTML"                  : Key("c-p"),
 
         },
     extras=[           # Special elements in the specs of the mapping.
