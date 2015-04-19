@@ -339,7 +339,7 @@ atom_mapping_rule = MappingRule(
         "(Toggle|Preview) markdown"              : Key("cs-m"),
         "(Toggle|Preview) HTML"                  : Key("c-p"),
 
-        # language selectionChoosing which
+        # language selection
         "(Select|Choose|Switch) (language|grammar)" : Key("cs-l"),
 
         },
