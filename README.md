@@ -4,7 +4,7 @@ The macros work with the [dragonfly library](
   http://dragonfly.readthedocs.org/en/latest/index.html).
 
 ###Installation
-Assuming you hiked the mountain of pain that is [setting up the dragonfly library](https://github.com/simianhacker/code-by-voice#getting-started), simply place all the python files in the MacroSystem directory (which is presumably located at C:\\Natlink\Natlink\Macrosystem).
+Assuming you hiked the mountain of pain that is [setting up the dragonfly library](https://github.com/simianhacker/code-by-voice#getting-started), simply place all the python files from the grammars directory into the windows MacroSystem directory (which is presumably located at C:\\Natlink\Natlink\Macrosystem).
 
 ###Issues
 Nota Bene: This is a work in progress.  
