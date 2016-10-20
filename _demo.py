@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
-# this file uses WSR (windows speech recognition)
-# instead of DNS (dragon naturally speaking)
-# basically just import pythoncom
-# and pump messages from it
-
-import pythoncom
-
 from dragonfly import Grammar, CompoundRule, MappingRule, AppContext, Dictation, Function, Integer, Key, Text, RuleRef, Repetition
 
 # SeriesMappingRule adapted from here:
@@ -242,8 +234,14 @@ def unload():
     if text_edit_grammar: text_edit_grammar.unload()
     text_edit_grammar = None
 
+# To use WSR (windows speech recognition)
+# instead of DNS (dragon naturally speaking)
+# uncomment the following lines
 
-# pump messages from windows
-while True:
-    pythoncom.PumpWaitingMessages()
-    sleep(.1)
+
+#import pythoncom
+#while True:
+#    pythoncom.PumpWaitingMessages()
+#    sleep(.1)
+
+
